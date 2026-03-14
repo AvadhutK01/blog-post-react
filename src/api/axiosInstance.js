@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://crudcrud.com/api/ea2965a348ea4769a1914a02957a6112/blogs';
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,

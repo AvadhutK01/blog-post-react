@@ -22,6 +22,64 @@
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .confirmation-modal {
+    max-width: 90%;
+    padding: 2rem;
+  }
+
+  .confirmation-modal-title {
+    font-size: 1.2rem;
+  }
+
+  .confirmation-modal-message {
+    font-size: 0.9rem;
+  }
+
+  .confirmation-modal-actions {
+    gap: 0.75rem;
+  }
+
+  .confirmation-modal-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .confirmation-modal-overlay {
+    padding: 1rem;
+  }
+
+  .confirmation-modal {
+    max-width: 100%;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .confirmation-modal-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .confirmation-modal-message {
+    margin-bottom: 1.75rem;
+    font-size: 0.85rem;
+  }
+
+  .confirmation-modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .confirmation-modal-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
 }
 
 @keyframes slideUp {

@@ -6,6 +6,7 @@ export const BlogModal = ({ isOpen, onClose, onSubmit, blog = null }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -14,10 +15,12 @@ export const BlogModal = ({ isOpen, onClose, onSubmit, blog = null }) => {
       setTitle(blog.title || '');
       setContent(blog.content || '');
       setAuthor(blog.author || '');
+      setImageUrl(blog.imageUrl || '');
     } else {
       setTitle('');
       setContent('');
       setAuthor('');
+      setImageUrl('');
     }
     setError('');
   }, [blog, isOpen]);
@@ -26,16 +29,22 @@ export const BlogModal = ({ isOpen, onClose, onSubmit, blog = null }) => {
     e.preventDefault();
     
     if (!title.trim() || !content.trim() || !author.trim()) {
-      setError('All fields are required');
+      setError('Title, Author, and Content are required');
       return;
     }
 
     setLoading(true);
     try {
-      await onSubmit({ title: title.trim(), content: content.trim(), author: author.trim() });
+      await onSubmit({ 
+        title: title.trim(), 
+        content: content.trim(), 
+        author: author.trim(),
+        imageUrl: imageUrl.trim()
+      });
       setTitle('');
       setContent('');
       setAuthor('');
+      setImageUrl('');
       setError('');
       onClose();
     } catch (err) {
@@ -81,6 +90,18 @@ export const BlogModal = ({ isOpen, onClose, onSubmit, blog = null }) => {
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="Enter author name"
+                disabled={loading}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="imageUrl">Image URL</label>
+              <input
+                id="imageUrl"
+                type="url"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="https://example.com/image.jpg"
                 disabled={loading}
               />
             </div>

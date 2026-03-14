@@ -65,19 +65,24 @@ export const BlogList = () => {
         </button>
       </div>
 
-      <div className="blog-list-container">
-        {loading ? (
-          <p className="loading">Loading blogs...</p>
-        ) : error ? (
-          <p className="error">Error: {error}</p>
-        ) : blogs.length === 0 ? (
-          <div className="blog-list-empty">
-            <p>No blog posts yet. Create your first one!</p>
-          </div>
-        ) : (
+      {loading ? (
+        <p className="loading">Loading blogs...</p>
+      ) : error ? (
+        <p className="error">Error: {error}</p>
+      ) : blogs.length === 0 ? (
+        <div className="blog-list-empty">
+          <p>No blog posts yet. Create your first one!</p>
+        </div>
+      ) : (
+        <div className="blog-list-container">
           <div className="blog-list">
             {blogs.map((blog) => (
               <article key={blog._id} className="blog-card">
+                {blog.imageUrl && (
+                  <div className="blog-card-image">
+                    <img src={blog.imageUrl} alt={blog.title} />
+                  </div>
+                )}
                 <div className="blog-card-header">
                   <h2 className="blog-card-title">{blog.title}</h2>
                 </div>
@@ -94,8 +99,8 @@ export const BlogList = () => {
               </article>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <BlogModal
         isOpen={isModalOpen}
