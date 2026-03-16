@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useBlog } from '../context/BlogContext';
 import { BlogModal } from './BlogModal';
 import { ConfirmationModal } from './ConfirmationModal';
-import '../styles/BlogList.css';
+import '../styles/BlogMain.css';
 
-export const BlogList = () => {
+export const BlogMain = () => {
   const { blogs, loading, error, addBlog, updateBlog, deleteBlog } = useBlog();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null);
@@ -58,7 +58,7 @@ export const BlogList = () => {
 
   return (
     <div className="blog-page">
-      <div className="blog-list-header">
+      <div className="blog-main-header">
         <h1>Blog Posts</h1>
         <button className="btn btn-primary btn-add" onClick={handleAddClick}>
           + Add New Blog
@@ -70,12 +70,12 @@ export const BlogList = () => {
       ) : error ? (
         <p className="error">Error: {error}</p>
       ) : blogs.length === 0 ? (
-        <div className="blog-list-empty">
+        <div className="blog-main-empty">
           <p>No blog posts yet. Create your first one!</p>
         </div>
       ) : (
-        <div className="blog-list-container">
-          <div className="blog-list">
+        <div className="blog-main-container">
+          <div className="blog-main">
             {blogs.map((blog) => (
               <article key={blog._id} className="blog-card">
                 {blog.imageUrl && (

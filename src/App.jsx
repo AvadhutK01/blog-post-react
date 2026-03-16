@@ -1,11 +1,11 @@
 import './App.css'
 import { BlogProvider } from './context/BlogContext'
-import { BlogList } from './components/BlogList'
+import { BlogMain } from './components/BlogMain'
 
 function App() {
   return (
     <BlogProvider>
-      <BlogList />
+      <BlogMain />
     </BlogProvider>
   )
 }
