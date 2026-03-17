@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useBlog } from '../context/BlogContext';
 import { BlogModal } from './BlogModal';
 import { ConfirmationModal } from './ConfirmationModal';
+import { BlogCard } from './BlogCard';
 import '../styles/BlogMain.css';
 
 export const BlogMain = () => {
@@ -77,26 +78,12 @@ export const BlogMain = () => {
         <div className="blog-main-container">
           <div className="blog-main">
             {blogs.map((blog) => (
-              <article key={blog._id} className="blog-card">
-                {blog.imageUrl && (
-                  <div className="blog-card-image">
-                    <img src={blog.imageUrl} alt={blog.title} />
-                  </div>
-                )}
-                <div className="blog-card-header">
-                  <h2 className="blog-card-title">{blog.title}</h2>
-                </div>
-                <p className="blog-card-author">By {blog.author}</p>
-                <p className="blog-card-content">{blog.content}</p>
-                <div className="blog-card-actions">
-                  <button className="btn btn-secondary" onClick={() => handleEditClick(blog)}>
-                    Edit
-                  </button>
-                  <button className="btn btn-danger" onClick={() => handleDeleteClick(blog)}>
-                    Delete
-                  </button>
-                </div>
-              </article>
+              <BlogCard
+                key={blog._id}
+                blog={blog}
+                onEdit={handleEditClick}
+                onDelete={handleDeleteClick}
+              />
             ))}
           </div>
         </div>
