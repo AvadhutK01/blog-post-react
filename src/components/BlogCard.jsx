@@ -1,6 +1,8 @@
-export const BlogCard = ({ blog, onEdit, onDelete }) => {
+import { memo } from 'react';
+
+export const BlogCard = memo(({ blog, onEdit, onDelete }) => {
   return (
-    <article key={blog._id} className="blog-card">
+    <article className="blog-card">
       {blog.imageUrl && (
         <div className="blog-card-image">
           <img src={blog.imageUrl} alt={blog.title} />
@@ -21,4 +23,4 @@ export const BlogCard = ({ blog, onEdit, onDelete }) => {
       </div>
     </article>
   );
-};
+});

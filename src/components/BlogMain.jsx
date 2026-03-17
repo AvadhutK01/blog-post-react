@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useBlog } from '../context/BlogContext';
 import { BlogModal } from './BlogModal';
 import { ConfirmationModal } from './ConfirmationModal';
@@ -18,10 +18,10 @@ export const BlogMain = () => {
     setIsModalOpen(true);
   };
 
-  const handleEditClick = (blog) => {
+  const handleEditClick = useCallback((blog) => {
     setEditingBlog(blog);
     setIsModalOpen(true);
-  };
+  }, []);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -36,10 +36,10 @@ export const BlogMain = () => {
     }
   };
 
-  const handleDeleteClick = (blog) => {
+  const handleDeleteClick = useCallback((blog) => {
     setBlogToDelete(blog);
     setIsConfirmOpen(true);
-  };
+  }, []);
 
   const handleConfirmDelete = async () => {
     setDeleteLoading(true);

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import axiosInstance from '../api/axiosInstance';
 
 const BlogContext = createContext();
@@ -8,7 +8,7 @@ export const BlogProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchBlogs = async () => {
+  const fetchBlogs = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -19,53 +19,52 @@ export const BlogProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchBlogs();
-  }, []);
+  }, [fetchBlogs]);
 
-  const addBlog = async (blogData) => {
+  const addBlog = useCallback(async (blogData) => {
     try {
       const response = await axiosInstance.post('', blogData);
-      setBlogs([...blogs, response.data]);
+      setBlogs((prev) => [...prev, response.data]);
       return response.data;
     } catch (err) {
       throw err;
     }
-  };
+  }, []);
 
-  const updateBlog = async (id, blogData) => {
+  const updateBlog = useCallback(async (id, blogData) => {
     try {
       const response = await axiosInstance.put(`/${id}`, blogData);
-      setBlogs(blogs.map(blog => blog._id === id ? response.data : blog));
+      setBlogs((prev) =>
+        prev.map((blog) =>
+          blog._id === id ? { ...blog, ...blogData, ...response.data } : blog
+        )
+      );
       return response.data;
     } catch (err) {
       throw err;
     }
-  };
+  }, []);
 
-  const deleteBlog = async (id) => {
+  const deleteBlog = useCallback(async (id) => {
     try {
       await axiosInstance.delete(`/${id}`);
-      setBlogs(blogs.filter(blog => blog._id !== id));
+      setBlogs((prev) => prev.filter((blog) => blog._id !== id));
     } catch (err) {
       throw err;
     }
-  };
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({ blogs, loading, error, fetchBlogs, addBlog, updateBlog, deleteBlog }),
+    [blogs, loading, error, fetchBlogs, addBlog, updateBlog, deleteBlog]
+  );
 
   return (
-    <BlogContext.Provider
-      value={{
-        blogs,
-        loading,
-        error,
-        fetchBlogs,
-        addBlog,
-        updateBlog,
-        deleteBlog,
-      }}
-    >
+    <BlogContext.Provider value={contextValue}>
       {children}
     </BlogContext.Provider>
   );
